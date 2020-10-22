@@ -20,15 +20,7 @@ if($nombre!=null and $password!=null){ //comprobamos si nombre y password tienen
         setcookie("contraseña",$password);
         setcookie("ultimaSesion",(string)getdate());
     }
-    $compro=iniciarS($base, $nombre, $password);    //llamamos a la funcion iniciarS para ver si el usuario esta en la base de datos
-    echo $compro;
-    /*
-    if($compro['name']==$nombre and $compro['password']==$password){
-        header("Location: htmls/succ_login.html");
-    }
-    else{
-        header("Location: htmls/formulario.html");
-    }*/
+    iniciarS($base, $nombre, $password);    //llamamos a la funcion iniciarS para ver si el usuario esta en la base de datos
 }
 else{
     echo "Pon bien el usuario y contraseña";    //si no hay nada en contraseña o name te lo recuerdo

@@ -38,12 +38,17 @@
 
     function iniciarS(PDO $db,$nombre,$password){
         $command4="
-        SELECT * FROM users WHERE name='$nombre' AND password='$password'";
+        SELECT * FROM users WHERE name = :name AND password = '$password'";
         try{
-            $final=$db->exec($command4);
-            $ret = sqlite_array_query($gestor_bd, 'SELECT name, email FROM users LIMIT 25', SQLITE_ASSOC);
-            return $ret;
-
+            $result = $db->prepare($command4);
+            $result->execute(array(':name'=> $nombre));
+            $comprob = $result->fetchColumn();
+            if($comprob>0){
+                header("Location: htmls/succ_login.html");
+            }
+            else{
+                header("Location: htmls/formulario.html");
+            }
         }catch(PDOException $e){
             die($e->getMessage());
         }
