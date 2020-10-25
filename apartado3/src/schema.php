@@ -36,18 +36,36 @@
         }
     }
 
-    function iniciarS(PDO $db,$nombre,$password){
+    function iniciarS(PDO $db,$nombre,$password,$recordar,$quieroR){
         $command4="
         SELECT * FROM users WHERE name = :name AND password = '$password'";
         try{
             $result = $db->prepare($command4);
             $result->execute(array(':name'=> $nombre));
             $comprob = $result->fetchColumn();
+            
             if($comprob>0){
-                header("Location: htmls/succ_login.html");
+                if(isset($recordar)){ //comprobamos si esta pulsado recordar
+                    setcookie("nombre",$nombre);    //añadimos las cookies
+                    setcookie("contraseña",$password);
+                    setcookie("ultimaSesion",date("d-m-Y"));
+                    
+                }
+                if($quieroR==true){
+                    header("Location: htmls/formulario.html");
+                }
+                else{
+                    header("Location: htmls/succ_login.html");
+                }
             }
             else{
-                header("Location: htmls/formulario.html");
+                if($quieroR==true){
+                    setcookie("userR",$nombre);
+                    header("Location: htmls/registro.php");
+                }
+                else{
+                    header("Location: htmls/formulario.html");
+                }
             }
         }catch(PDOException $e){
             die($e->getMessage());

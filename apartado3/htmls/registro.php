@@ -6,14 +6,12 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="../login.php" method="post">
-        <p>Nombre: <input type="text" name="name"></p>
+    <form action="../register.php" method="post">
+        <p>Nombre: <?php echo $_COOKIE['userR'] ?></p>
         <p>Contraseña: <input type="password" name="pass"></p>
-        <p>Recordar: <input type="checkbox" name="Recordar"></p>
-        <p>Registrar: <input type="checkbox" name="Registrar"></p>
+        <p>Repetir Contraseña: <input type="password" name="pass2"></p>
         <p>
           <input type="submit" value="Enviar">
         </p>
-      </form>
 </body>
 </html>

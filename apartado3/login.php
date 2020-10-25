@@ -10,17 +10,13 @@ $registrar=filter_input(INPUT_POST,"Registrar");
 
 $dbname="database";
 $base=connectSqlite($dbname); //conectamos con la base de datos
-
+$quieroR = false;
 if($nombre!=null and $password!=null){ //comprobamos si nombre y password tienen contenido
     if(isset($registrar)){  //comprobamos si registrar esta pulsada
-        insert($base,$nombre,$password);    //llamamos a la funcion insert para añadir a la base de datos
+        $quieroR = true;
+        //insert($base,$nombre,$password);    //llamamos a la funcion insert para añadir a la base de datos
     }
-    if(isset($recordar)){ //comprobamos si esta pulsado recordar
-        setcookie("nombre",$nombre);    //añadimos las cookies
-        setcookie("contraseña",$password);
-        setcookie("ultimaSesion",(string)getdate());
-    }
-    iniciarS($base, $nombre, $password);    //llamamos a la funcion iniciarS para ver si el usuario esta en la base de datos
+    iniciarS($base, $nombre, $password, $recordar, $quieroR);    //llamamos a la funcion iniciarS para ver si el usuario esta en la base de datos
 }
 else{
     echo "Pon bien el usuario y contraseña";    //si no hay nada en contraseña o name te lo recuerdo
